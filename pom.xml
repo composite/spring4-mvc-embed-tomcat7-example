@@ -27,7 +27,6 @@
 		<servlet.version>3.0.1</servlet.version>
 		<httpasyncclient.version>4.0</httpasyncclient.version>
 		<tomcat.version>7.0.47</tomcat.version>
-		<apache.cxf.version>2.7.2</apache.cxf.version>
 
 		<!-- Aspect -->
 		<aspectj.version>1.7.4</aspectj.version>
@@ -47,6 +46,8 @@
 		<slf4j.version>1.7.5</slf4j.version>
 
 		<!-- Utilities -->
+		<spring-jade4j.version>0.4.0</spring-jade4j.version>
+		<thymeleaf.version>2.1.2.RELEASE</thymeleaf.version>
 		<joda-time.version>2.3</joda-time.version>
 
 		<!-- Test -->
@@ -165,6 +166,7 @@
 			<version>${commons-pool.version}</version>
 		</dependency>
 
+		<!-- Servlet API / JSP -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
@@ -213,11 +215,6 @@
 			<artifactId>tomcat-jsp-api</artifactId>
 			<version>${tomcat.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-rt-frontend-jaxrs</artifactId>
-			<version>${apache.cxf.version}</version>
-		</dependency>
 
 		<!-- Logging with SLF4J & LogBack -->
 		<dependency>
@@ -232,6 +229,17 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<!-- Template Engines?! -->
+		<dependency>
+			<groupId>de.neuland-bfi</groupId>
+			<artifactId>spring-jade4j</artifactId>
+			<version>${spring-jade4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.thymeleaf</groupId>
+			<artifactId>thymeleaf-spring3</artifactId>
+			<version>${thymeleaf.version}</version>
+		</dependency>
 
 		<!-- Utilities -->
 		<dependency>
@@ -254,7 +262,7 @@
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
-
+		
 	</dependencies>
 	<build>
 		<plugins>
@@ -303,7 +311,8 @@
 						</goals>
 						<configuration>
 							<transformers>
-								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 									<mainClass>net.sample.app.Application</mainClass>
 								</transformer>
 							</transformers>

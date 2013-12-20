@@ -17,14 +17,19 @@ This project is minimal setting of Spring 4 MVC. maybe.
 
 ## Goals
 
- - JSTL, other template (ex. Thymeleaf) support.
+ - Both Thymeleaf and JSP, is it possible?
  - Websocket support with Spring 4, STOMP.
  - User-friendly port change. (If you aleady using 8080.)
  - **I wanna make Production use!!!**
 
-## Known Issues
+## Changelog
 
  - View page solved. When get context, you must call `Tomcat.initWebappDefaults(context);`
  - Static resources solved. `registry.addResourceHandler("/js/**").addResourceLocations("classpath:/static/js/")`
+ - jade4j and Thymeleaf support (but with Thymeleaf, JSP not work. why?)
+
+## Known Issues
+
+ - I can't understand I can't use both Thymeleaf and JSP.
  - _JSTL still not work. plz help!_
  - **NOT STABLE. PLZ DO NOT USE THIS AT PRODUCTION YET.**
