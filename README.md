@@ -10,7 +10,7 @@ This project is minimal setting of Spring 4 MVC. maybe.
 
 ## How to?
 
- - Download
+ - Download or `git clone`
  - `mvn install`
  - `java -jar "PROJECT.jar" class net.sample.Application`
  - `http://localhost:8080`
