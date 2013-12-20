@@ -21,7 +21,7 @@ This project is minimal setting of Spring 4 MVC. maybe.
  - JSTL, other template (ex. Thymeleaf) support.
  - Websocket support with Spring 4, STOMP.
  - User-friendly port change. (If you aleady using 8080.)
- - **I wanna make to Production use!!!**
+ - **I wanna make Production use!!!**
 
 ## Known Issues
 
