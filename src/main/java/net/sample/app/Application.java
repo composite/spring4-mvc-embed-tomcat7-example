@@ -33,6 +33,7 @@ public class Application {
 		
 		tomcat.setPort(8080);
 		tomcat.setBaseDir(tmp.getAbsolutePath());
+		
 		Connector connector = tomcat.getConnector();
 		connector.setProtocol("org.apache.coyote.http11.Http11NioProtocol");
 		connector.setXpoweredBy(false);
@@ -56,7 +57,7 @@ public class Application {
 		context.addApplicationListener(new ApplicationListener(ContextLoaderListener.class.getName(), false));
 		tomcat.addServlet(ROOT, SERVLET, new DispatcherServlet(new AnnotationConfigWebApplicationContext(){{
 			register(ServletConfig.class);
-		}})).setLoadOnStartup(2);
+		}})).setLoadOnStartup(1);
 		context.addServletMapping(ROOT, SERVLET);
 		
 		//???
