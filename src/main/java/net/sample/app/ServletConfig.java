@@ -16,9 +16,9 @@ import org.springframework.web.socket.config.annotation.EnableWebSocket;
 public class ServletConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/static/js/**").addResourceLocations("/js/**").setCachePeriod(31556926);
-		registry.addResourceHandler("/static/css/**").addResourceLocations("/css/**").setCachePeriod(31556926);
-		registry.addResourceHandler("/static/resource/**").addResourceLocations("/resource/**").setCachePeriod(31556926);
+		registry.addResourceHandler("/js/**").addResourceLocations("classpath:/static/js/").setCachePeriod(31556926);
+		registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/css/").setCachePeriod(31556926);
+		registry.addResourceHandler("/resource/**").addResourceLocations("classpath:/static/resource/").setCachePeriod(31556926);
 	}
 	
 	@Bean

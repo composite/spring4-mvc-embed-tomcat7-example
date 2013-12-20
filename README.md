@@ -17,7 +17,6 @@ This project is minimal setting of Spring 4 MVC. maybe.
 
 ## Goals
 
- - resolve Static Resource.
  - JSTL, other template (ex. Thymeleaf) support.
  - Websocket support with Spring 4, STOMP.
  - User-friendly port change. (If you aleady using 8080.)
@@ -26,6 +25,6 @@ This project is minimal setting of Spring 4 MVC. maybe.
 ## Known Issues
 
  - View page solved. When get context, you must call `Tomcat.initWebappDefaults(context);`
- - Static resources still not loaded.
- - JSTL still not work. plz help!
+ - Static resources solved. `registry.addResourceHandler("/js/**").addResourceLocations("classpath:/static/js/")`
+ - _JSTL still not work. plz help!_
  - **NOT STABLE. PLZ DO NOT USE THIS AT PRODUCTION YET.**
