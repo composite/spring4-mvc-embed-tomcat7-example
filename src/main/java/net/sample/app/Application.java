@@ -2,6 +2,9 @@ package net.sample.app;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.ServerSocket;
+import java.util.Arrays;
+import java.util.List;
 
 import org.apache.catalina.Context;
 import org.apache.catalina.Host;
@@ -23,13 +26,55 @@ public class Application {
 	private final static Log log = LogFactory.getLog(Application.class);
 	
 	public static void main(String[] args) throws Exception {
-		final File base = new File(Application.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+		
 		final File tmp = createBaseDirectory();
 		final Tomcat tomcat = new Tomcat();
-		log.info("Using base folder: " + base.getAbsolutePath());
-		log.info("Using temp folder: " + tmp.getAbsolutePath());
+		File appbase = null;
+		int port = 8080;
 		
-		tomcat.setPort(8080);
+		//인자 파싱
+		List<String> argkeys = Arrays.asList("appbase","port");
+		for(String arg : args){
+			if(arg.contains("=")){
+				String[] kv = arg.split("=");
+				if(kv.length == 2){
+					switch(argkeys.indexOf(kv[0])){
+						case 0://appbase
+							appbase = new File(kv[1]);
+							if(!appbase.isDirectory() || !appbase.exists()){
+								log.warn("path '"+kv[1]+"' is not vaild directory or not exists.");
+								appbase = tmp;
+							}
+							break;
+						case 1://port
+							try{
+								port = Integer.parseInt(kv[1]);
+							}catch(NumberFormatException e){
+								log.warn("port '"+kv[1]+"' is not vaild port.");
+							}
+							break;
+					}
+				}
+				
+			}
+			
+		}
+		
+		ServerSocket socket = null;
+		try{
+			socket = new ServerSocket(port);
+		}catch(IOException e){
+			log.error("port " + port + " is already in use. please try another port.");
+			System.exit(1);
+			return;
+		}finally{
+			socket.close();
+		}
+		
+		log.info("Tomcat port: " + port);
+		log.info("Tomcat workdir: " + tmp.getAbsolutePath());
+		
+		tomcat.setPort(port);
 		tomcat.setBaseDir(tmp.getAbsolutePath());
 		
 		Connector connector = tomcat.getConnector();
@@ -42,7 +87,7 @@ public class Application {
 		connector.setAttribute("processorCache", "800");
 		
 		Host host = tomcat.getHost();
-		host.setAppBase(base.getAbsolutePath());
+		host.setAppBase(tmp.getAbsolutePath());
 		host.setAutoDeploy(true);
 		host.setDeployOnStartup(true);
 		

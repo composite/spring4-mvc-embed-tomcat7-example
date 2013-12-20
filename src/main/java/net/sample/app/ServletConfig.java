@@ -18,12 +18,10 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.BeanNameViewResolver;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.JstlView;
-import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import org.thymeleaf.spring3.SpringTemplateEngine;
 import org.thymeleaf.spring3.view.ThymeleafViewResolver;
-import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
+import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
+import org.thymeleaf.templateresolver.TemplateResolver;
 
 import de.neuland.jade4j.JadeConfiguration;
 import de.neuland.jade4j.spring.template.SpringTemplateLoader;
@@ -89,7 +87,7 @@ public class ServletConfig extends WebMvcConfigurerAdapter {
 	@Bean
     public SpringTemplateLoader templateLoader() {
         SpringTemplateLoader templateLoader = new SpringTemplateLoader();
-        templateLoader.setBasePath("/views/");
+        templateLoader.setBasePath("classpath:/views/");
         templateLoader.setEncoding("UTF-8");
         templateLoader.setSuffix(".jade");
         return templateLoader;
@@ -115,14 +113,14 @@ public class ServletConfig extends WebMvcConfigurerAdapter {
 	// View Engine : Thymeleaf
 	///////////////////////////
     @Bean
-    public ServletContextTemplateResolver templateResolver(){
-    	ServletContextTemplateResolver contextTemplateResolver = new ServletContextTemplateResolver();
-    	contextTemplateResolver.setPrefix("/views/");
-    	contextTemplateResolver.setSuffix(".html");
-    	contextTemplateResolver.setTemplateMode("HTML5");
-    	contextTemplateResolver.setCharacterEncoding("UTF-8");
-    	contextTemplateResolver.setCacheable(false);
-    	return contextTemplateResolver;
+    public TemplateResolver templateResolver(){
+    	ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+    	templateResolver.setPrefix("views/");
+    	templateResolver.setSuffix(".html");
+    	templateResolver.setTemplateMode("HTML5");
+    	templateResolver.setCharacterEncoding("UTF-8");
+    	templateResolver.setCacheable(false);
+    	return templateResolver;
     }
     @Bean
     public SpringTemplateEngine springTemplateEngine(){
@@ -137,17 +135,4 @@ public class ServletConfig extends WebMvcConfigurerAdapter {
     	viewResolver.setOrder(3);
     	return viewResolver;
     }
-	
-	///////////////////////////
-	// Last View engine : JSP
-	///////////////////////////
-	@Bean
-	public UrlBasedViewResolver urlBasedViewResolver(){
-		UrlBasedViewResolver urlBasedViewResolver = new InternalResourceViewResolver();
-        urlBasedViewResolver.setViewClass(JstlView.class);
-        urlBasedViewResolver.setPrefix("/views/");
-        urlBasedViewResolver.setSuffix(".jsp");
-        urlBasedViewResolver.setOrder(10);
-        return urlBasedViewResolver;
-	}
 }

@@ -43,7 +43,6 @@ public class AppController {
 		
 		out.write("<h1>Hello World!</h1>");
 		out.write("<ul>");
-		out.write("<li><a href='sample.other'>View sample with JSP</a></li>");
 		out.write("<li><a href='sample.jade'>View sample with jade4j</a></li>");
 		out.write("<li><a href='sample.tl'>View sample with thymeleaf</a></li>");
 		out.write("<li><a href='resource/index.html'>View resource</a></li>");
