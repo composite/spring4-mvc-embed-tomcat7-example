@@ -26,11 +26,12 @@
 		<!-- WEB -->
 		<servlet.version>3.0.1</servlet.version>
 		<httpasyncclient.version>4.0</httpasyncclient.version>
-		<jetty.version>8.1.14.v20131031</jetty.version>
 		<tomcat.version>7.0.47</tomcat.version>
+		<apache.cxf.version>2.7.2</apache.cxf.version>
 
 		<!-- Aspect -->
 		<aspectj.version>1.7.4</aspectj.version>
+		<cglib.version>2.2</cglib.version>
 
 		<!-- Data Management -->
 		<commons-pool.version>1.6</commons-pool.version>
@@ -124,6 +125,12 @@
 			<version>${aspectj.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib-nodep</artifactId>
+			<version>${cglib.version}</version>
+		</dependency>
+
 		<!-- Hibernate -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -141,7 +148,7 @@
 			<version>${hibernate.version}</version>
 		</dependency>
 
-
+		<!-- Databind -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
@@ -180,17 +187,7 @@
 			<version>${activemq.version}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-webapp</artifactId>
-			<version>${jetty.version}</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>javax.servlet</artifactId>
-					<groupId>org.eclipse.jetty.orbit</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+		<!-- Web Component -->
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpasyncclient</artifactId>
@@ -215,6 +212,11 @@
 			<groupId>org.apache.tomcat</groupId>
 			<artifactId>tomcat-jsp-api</artifactId>
 			<version>${tomcat.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxrs</artifactId>
+			<version>${apache.cxf.version}</version>
 		</dependency>
 
 		<!-- Logging with SLF4J & LogBack -->
@@ -261,8 +263,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
 					<encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
 			</plugin>

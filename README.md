@@ -16,5 +16,7 @@ This project is minimal setting of Spring 4 MVC. maybe.
 
 ## Known Issues
 
- - View page path still not found. I'm resolving this problem.
- - NOT STABLE. PLZ DO NOT USE THIS AT PRODUCTION YET.
+ - View page solved. When get context, you must call `Tomcat.initWebappDefaults(context);`
+ - Static resources still not loaded.
+ - JSTL still not work. plz help!
+ - **NOT STABLE. PLZ DO NOT USE THIS AT PRODUCTION YET.**

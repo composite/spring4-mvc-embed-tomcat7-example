@@ -31,7 +31,8 @@ public class AppController {
 		PrintWriter out = res.getWriter();
 		
 		out.write("<h1>Hello World!</h1>");
-		out.write("<a href='sample'>View sample</a>");
+		out.write("<a href='sample'>View sample</a><br/>");
+		out.write("<a href='resource/index.html'>View resource</a>");
 		
 	}
 }
