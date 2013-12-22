@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.apache.catalina.Context;
 import org.apache.catalina.Host;
+import org.apache.catalina.Wrapper;
 import org.apache.catalina.connector.Connector;
 import org.apache.catalina.deploy.ApplicationListener;
 import org.apache.catalina.loader.WebappLoader;
@@ -94,13 +95,16 @@ public class Application {
 		//web.config 구현
 		Context context = tomcat.addContext(ROOT, "");
 		Tomcat.initWebappDefaults(context);//기본형 web.xml 구현화 (필수)
+		
 		context.setLoader(new WebappLoader(Thread.currentThread().getContextClassLoader()));
 		
 		//Spring 리스너 및 AppServlet 구성
 		context.addApplicationListener(new ApplicationListener(ContextLoaderListener.class.getName(), false));
-		tomcat.addServlet(ROOT, SERVLET, new DispatcherServlet(new AnnotationConfigWebApplicationContext(){{
+		Wrapper appServlet =  tomcat.addServlet(ROOT, SERVLET, new DispatcherServlet(new AnnotationConfigWebApplicationContext(){{
 			register(ServletConfig.class);
-		}})).setLoadOnStartup(1);
+		}}));
+		appServlet.setAsyncSupported(true);
+		appServlet.setLoadOnStartup(1);
 		context.addServletMapping(ROOT, SERVLET);
 		
 		//???

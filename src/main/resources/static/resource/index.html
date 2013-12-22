@@ -34,7 +34,7 @@
         
         function sendName() {
             var name = document.getElementById('name').value;
-            stompClient.send("/app/hello", {}, name);
+            stompClient.send("/app/hello", {}, JSON.stringify({msg:name}));
         }
         
         function showGreeting(message) {

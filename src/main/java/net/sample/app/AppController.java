@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -55,8 +56,8 @@ public class AppController {
 	
 	@MessageMapping("/hello")
     @SendTo("/topic/greetings")
-    public String greeting(String message) throws Exception {
+    public String greeting(Map<String, Object> message) throws Exception {
         Thread.sleep(3000); // simulated delay
-        return "Hello, " + message + "!";
+        return "Hello, " + message.get("msg") + "!";
     }
 }
