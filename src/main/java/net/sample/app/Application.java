@@ -2,6 +2,7 @@ package net.sample.app;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.util.Arrays;
 import java.util.List;
@@ -15,6 +16,7 @@ import org.apache.catalina.loader.WebappLoader;
 import org.apache.catalina.startup.Tomcat;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.coyote.http11.Http11NioProtocol;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
@@ -78,21 +80,12 @@ public class Application {
 		tomcat.setPort(port);
 		tomcat.setBaseDir(tmp.getAbsolutePath());
 		
-		Connector connector = tomcat.getConnector();
-		connector.setProtocol("org.apache.coyote.http11.Http11NioProtocol");
-		connector.setXpoweredBy(false);
-		connector.setAttribute("useComet", "false");
-		connector.setAttribute("socket.directBuffer", "true");
-		connector.setAttribute("pollerThreadCount", "2");
-		connector.setAttribute("maxThreads", "800");
-		connector.setAttribute("processorCache", "800");
-		
 		Host host = tomcat.getHost();
 		host.setAppBase(tmp.getAbsolutePath());
 		host.setAutoDeploy(true);
 		host.setDeployOnStartup(true);
 		
-		//web.config 구현
+		//web.xml 구현
 		Context context = tomcat.addContext(ROOT, "");
 		Tomcat.initWebappDefaults(context);//기본형 web.xml 구현화 (필수)
 		
@@ -110,6 +103,22 @@ public class Application {
 		//???
 		context.addParameter("contextClass", AnnotationConfigWebApplicationContext.class.getName());
 		context.addParameter("contextConfigLocation", AppConfig.class.getName());
+		
+		// Non-blocking IO 프로토콜로 작동
+		Connector connector = new Connector(Http11NioProtocol.class.getName());
+		connector.setPort(port);
+		connector.setProperty("address", InetAddress.getByName("localhost").getHostAddress());
+		connector.setXpoweredBy(false);
+		connector.setURIEncoding("UTF-8");
+		connector.setAttribute("connectionTimeout", "3000");
+		connector.setAttribute("useComet", "false");
+		connector.setAttribute("socket.directBuffer", "true");
+		connector.setAttribute("pollerThreadCount", "2");
+		connector.setAttribute("maxThreads", "800");
+		connector.setAttribute("processorCache", "800");
+		tomcat.getService().addConnector(connector);
+		tomcat.setConnector(connector);
+		
 		
 		//톰캣 시작
 		tomcat.start();

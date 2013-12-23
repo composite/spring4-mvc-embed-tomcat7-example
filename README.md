@@ -17,10 +17,9 @@ This project is minimal setting of Spring 4 MVC. maybe.
 
 ## Goals
 
- - JSP forward (but less PRIORITY. because I'll not use JSP View at my production.)
- - Websocket support with Spring 4, STOMP.
- - User-friendly port change. (If you aleady using 8080.)
+ - **Fully Websocket!**
  - **I wanna make Production use!!!**
+ - JSP forward (but less PRIORITY. because I'll not use JSP View at my production.)
 
 ## Changelog
 
@@ -28,6 +27,22 @@ This project is minimal setting of Spring 4 MVC. maybe.
  - Static resources solved. `registry.addResourceHandler("/js/**").addResourceLocations("classpath:/static/js/")`
  - jade4j and Thymeleaf support (but with Thymeleaf, JSP not work. why?)
  - JSP resolver removed dut to unable forward JSP file in JAR. use Thymeleaf or jade4j instead until solve this problem.
+ - parameterized port change and tomcat workdir changeable. `java -jar "PROJECT.jar" port=8081 basedir=/path/to/tomcat/workdir`
+ - Websocket support by [puryfury](https://github.com/puryfury). thanks.
+ - embedded Tomcat will run with Non-blocking HTTP IO (Http11NioProtocol).
+
+## Websocket notes
+
+ - This example will running with SockJS websocket emulation. If you want native websocket, convert this to war project and run with server below,
+   + Tomcat 8
+   + Jetty 9
+   + Glassfish 4.0
+ - looking for similar project? google or check out project below.
+   + [rstoyanchev / spring-websocket-test](https://github.com/rstoyanchev/spring-websocket-test)
+ - If you want technical infomation, see below,
+   + [JSR-356 Java EE 7 Specification](https://www.jcp.org/en/jsr/detail?id=356)
+   + [SockJS](http://sockjs.org)
+   + [STOMP](http://stomp.github.io/)
 
 ## Known Issues
 
